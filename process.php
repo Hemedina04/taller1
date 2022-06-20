@@ -37,7 +37,8 @@ $_SESSION['merchterm'] = $merchterm;
 
 
 
-function request($iva,$totaTarifa12,$totalBase0, $finger,$merchterm) {
+function request($items, $total,$iva,$totaTarifa12,$totalBase0, $trx, $finger
+	) {
 	
 	$finger = urlencode($finger);
 	$i = 0;
@@ -52,31 +53,18 @@ function request($iva,$totaTarifa12,$totalBase0, $finger,$merchterm) {
 		"&amount=".$total.
 		"&currency=USD".
 		"&paymentType=DB".
-		"&customer.givenName=".$primer_nombre.
-		"&customer.middleName=".$segundo_nombre.
-		"&customer.surname=".$apellido.
-		"&customer.ip=".$ip_address.
-		"&customer.merchantCustomerId=000000000001".
-		"&merchantTransactionId=transaction_".$trx.		
-		"&customer.email=".$email.
+		"&customer.merchantCustomerId=000000000001".		
 		"&customer.identificationDocType=IDCARD".		
-		"&customer.identificationDocId=".$cedula.
-		"&customer.phone=".$telefono.
-		"&billing.street1=".$direccion_cliente.
-		"&billing.country=".$pais_cliente.
-		"&shipping.street1=".$direccion_entrega.
-		"&shipping.country=".$pais_entrega.
 		/*"&recurringType=INITIAL".*/
 		"&risk.parameters[USER_DATA2]=DATAFAST".
 		"&customParameters[SHOPPER_VERSIONDF]=2".
 		"&customParameters[".$merchterm."]=00810030070103910004012".$valueIva."05100817913101052012".$valueTotalBase0."053012".$valueTotalIva;
 		
 	foreach ($items["cart"] as $c) {
-		
 		$data.= "&cart.items[".$i."].name=".$c["product_name"];
-		$data2.= "&cart.items[".$i."].description="."Descripcion: ".$c["product_name"];
-		$data3.= "&cart.items[".$i."].price=".$c["product_price"];
-		$data4.= "&cart.items[".$i."].quantity=".$c["q"];		
+		$data.= "&cart.items[".$i."].description="."Descripcion: ".$c["product_name"];
+		$data.= "&cart.items[".$i."].price=".$c["product_price"];
+		$data.= "&cart.items[".$i."].quantity=".$c["q"];		
 		$i++;
 	}
 	
