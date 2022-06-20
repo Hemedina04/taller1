@@ -1,4 +1,5 @@
-﻿<?php 
+﻿<?php
+//ESTO ES UN COMENTARIO =)
 session_start();
 header('Content-Type: text/html; charset=utf-8');
 include "conection.php";
