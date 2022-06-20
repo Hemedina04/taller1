@@ -18,7 +18,7 @@ if (!file_exists($nombre_fichero)) {
 if (filesize($nombre_fichero) == 0){
   $vacio = false;
 }else{
-  $file = fopen($nombre_fichero, "r") || exit("Error abriendo fichero!");
+  $file = fopen($nombre_fichero, "r");
   $linea = fgets($file);
   $terminal =  explode("_", $linea);
   $mid = trim($terminal[0]);
@@ -37,8 +37,7 @@ $_SESSION['merchterm'] = $merchterm;
 
 
 
-function request($items, $total,$iva,$totaTarifa12,$totalBase0, $trx, $finger
-	) {
+function request($items, $total,$iva,$totaTarifa12,$totalBase0, $finger,$merchterm)) {
 	
 	$finger = urlencode($finger);
 	$i = 0;
@@ -61,10 +60,11 @@ function request($items, $total,$iva,$totaTarifa12,$totalBase0, $trx, $finger
 		"&customParameters[".$merchterm."]=00810030070103910004012".$valueIva."05100817913101052012".$valueTotalBase0."053012".$valueTotalIva;
 		
 	foreach ($items["cart"] as $c) {
-		$data.= "&cart.items[".$i."].name=".$c["product_name"];
-		$data.= "&cart.items[".$i."].description="."Descripcion: ".$c["product_name"];
-		$data.= "&cart.items[".$i."].price=".$c["product_price"];
-		$data.= "&cart.items[".$i."].quantity=".$c["q"];		
+		$text = "&cart.items[";
+		$data.= $text.$i."].name=".$c["product_name"];
+		$data.= $text.$i."].description="."Descripcion: ".$c["product_name"];
+		$data.= $text.$i."].price=".$c["product_price"];
+		$data.= $text.$i."].quantity=".$c["q"];		
 		$i++;
 	}
 	
